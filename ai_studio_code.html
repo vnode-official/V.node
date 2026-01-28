@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.NODE | Private Olfactory Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #0A0A0A;
+            --gold: #C5A021;
+            --gold-muted: #846a14;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body {
+            background-color: var(--charcoal);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Typography */
+        h1, h2, .gold-title { font-family: 'Cinzel', serif; letter-spacing: 4px; text-transform: uppercase; }
+        p { font-weight: 200; line-height: 1.8; color: #a0a0a0; }
+
+        /* Luxury Layout */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .gold-line {
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            margin: 20px 0;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+
+        /* AI Survey Section */
+        #ai-synthesis {
+            background: var(--glass);
+            border: 1px solid rgba(197, 160, 33, 0.1);
+            padding: 60px;
+            margin-top: -100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 1.5s ease; }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px 40px;
+            text-transform: uppercase;
+            font-family: 'Cinzel';
+            letter-spacing: 2px;
+            transition: 0.5s;
+            margin-top: 30px;
+        }
+
+        button:hover { background: var(--gold); color: var(--charcoal); box-shadow: 0 0 20px rgba(197, 160, 33, 0.4); }
+
+        select, input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--gold-muted);
+            color: white;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            outline: none;
+            margin-top: 20px;
+        }
+
+        /* Concierge Chat */
+        #concierge-panel {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 300px;
+            background: #111;
+            border: 1px solid var(--gold);
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Pricing Area */
+        .membership-card {
+            text-align: center;
+            border: 1px solid var(--gold);
+            padding: 80px 20px;
+            margin-top: 50px;
+        }
+
+        .price { font-size: 3rem; color: var(--gold); margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="font-size: 0.9rem; opacity: 0.6;">Palm Jumeirah | Dubai</h1>
+        <div class="gold-line"></div>
+        <h2 style="font-size: 3.5rem;">V.NODE</h2>
+        <p style="letter-spacing: 8px;">Private Olfactory Intelligence</p>
+        <button onclick="scrollToSurvey()">Initialize Synthesis</button>
+    </header>
+
+    <div class="container">
+        <section id="ai-synthesis">
+            <div id="step-1" class="step active">
+                <h2 class="gold-title">Environmental Context</h2>
+                <p>Where is your presence most frequently felt?</p>
+                <select id="env-input">
+                    <option value="yacht">Superyacht / Marine Breeze</option>
+                    <option value="boardroom">The Executive Suite</option>
+                    <option value="desert">Desert Night / Majlis</option>
+                </select>
+                <button onclick="nextStep(1)">Next Phase</button>
+            </div>
+
+            <div id="step-2" class="step">
+                <h2 class="gold-title">Scent DNA</h2>
+                <p>Select your primary character base:</p>
+                <select id="dna-input">
+                    <option value="oud">Rare Oud & Tobacco</option>
+                    <option value="citrus">Neroli & Mediterranean Citrus</option>
+                    <option value="wood">Sandalwood & Velvet</option>
+                </select>
+                <button onclick="nextStep(2)">Finalize Profile</button>
+            </div>
+
+            <div id="step-3" class="step">
+                <h2 class="gold-title">Profile Encrypted</h2>
+                <p>Your olfactory evolution cycle is ready. Proceed to secure your membership.</p>
+                <p id="cycle-preview" style="color: var(--gold); margin-top: 10px;"></p>
+                <button onclick="scrollToPayment()">Access the Vault</button>
+            </div>
+        </section>
+
+        <section id="membership" class="membership-card">
+            <h2 class="gold-title">Elite Tier</h2>
+            <div class="price">$199<span style="font-size: 1rem; color: white;">/MONTH</span></div>
+            <p>2 Masterpiece Recommendations per month.<br>Sent every 14 days to your private registry.</p>
+            
+            <div id="paypal-button-container" style="margin-top: 30px;">
+                <!-- Placeholder for PayPal -->
+                <button style="width: 100%;" onclick="simulateSubscription()">Subscribe via PayPal</button>
+            </div>
+        </section>
+    </div>
+
+    <div id="concierge-panel">
+        <h3 class="gold-title" style="font-size: 0.7rem; margin-bottom: 10px;">VIP Concierge</h3>
+        <div id="chat-box" style="font-size: 0.8rem; height: 100px; overflow-y: auto; margin-bottom: 10px;">
+            V.Node: Waiting for request...
+        </div>
+        <input type="text" id="chat-input" placeholder="Ask anything..." style="font-size: 0.8rem;" onkeypress="handleChat(event)">
+    </div>
+
+    <script>
+        // 1. Survey Navigation
+        function nextStep(current) {
+            document.getElementById(`step-${current}`).classList.remove('active');
+            document.getElementById(`step-${current + 1}`).classList.add('active');
+            
+            if(current === 2) calculateCycle();
+        }
+
+        function scrollToSurvey() { document.getElementById('ai-synthesis').scrollIntoView(); }
+        function scrollToPayment() { document.getElementById('membership').scrollIntoView(); }
+
+        // 2. Automated 14-Day Cycle Logic
+        function calculateCycle() {
+            const now = new Date();
+            const evolutionDate = new Date();
+            evolutionDate.setDate(now.getDate() + 14);
+            
+            const options = { month: 'long', day: 'numeric' };
+            document.getElementById('cycle-preview').innerText = 
+                `Phase 1: Immediate Dispatch | Phase 2 (Evolution): ${evolutionDate.toLocaleDateString(undefined, options)}`;
+        }
+
+        // 3. AI Concierge Simulation (Gmail Placeholder)
+        function handleChat(e) {
+            if(e.key === 'Enter') {
+                const input = document.getElementById('chat-input');
+                const chatBox = document.getElementById('chat-box');
+                
+                chatBox.innerHTML += `<div style="color: var(--gold)">You: ${input.value}</div>`;
+                
+                // Simulated AI Response
+                setTimeout(() => {
+                    chatBox.innerHTML += `<div>V.Node: Your request has been relayed to the private concierge at vlt.stll.hq@gmail.com. Expect a response via encrypted channel.</div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+            }
+        }
+
+        function simulateSubscription() {
+            alert("Redirecting to Secure PayPal Gateway...");
+            // In production, this triggers the PayPal SDK
+        }
+    </script>
+</body>
+</html>
