@@ -1,54 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUX AI | Private Fragrance Curation</title>
-    <style>
-        body { background-color: #0a0a0a; color: #d4af37; font-family: 'Times New Roman', serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
-        .container { padding: 20px; border: 1px solid #d4af37; max-width: 400px; background: rgba(20, 20, 20, 0.9); }
-        h1 { font-size: 3rem; letter-spacing: 10px; margin-bottom: 10px; }
-        p { color: #ffffff; font-style: italic; margin-bottom: 30px; }
-        .btn { background-color: #d4af37; color: #000; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 0; cursor: pointer; transition: 0.3s; border: none; width: 100%; }
-        .btn:hover { background-color: #fff; color: #000; }
-        #waitlist-form { display: none; margin-top: 20px; }
-        input { padding: 10px; width: 80%; margin-bottom: 10px; border: 1px solid #d4af37; background: #000; color: #fff; }
-    </style>
-</head>
-<body>
+# SOVEREIGN-X
 
-    <div class="container">
-        <h1>LUX</h1>
-        <p>Beyond Scent. AI-Powered Luxury for the Elite.</p>
-        
-        <div id="main-content">
-            <button class="btn" onclick="showForm()">RESERVE YOUR SCENT</button>
-        </div>
+Premium landing page for SOVEREIGN-X — autonomous AI node assets with royalty distribution.
 
-        <div id="waitlist-form">
-            <p>Our private lab is at capacity.<br>Join the waitlist for exclusive access.</p>
-            <input type="email" id="user-email" placeholder="Your Private Email Address">
-            <button class="btn" onclick="submitForm()">JOIN WAITLIST</button>
-        </div>
-    </div>
+## Stack
 
-    <script>
-        function showForm() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('waitlist-form').style.display = 'block';
-        }
+- **Next.js 14** (App Router) + **TypeScript** (strict)
+- **Tailwind CSS** 3.4
+- **Framer Motion** 11 for scroll reveals and staggered entrances
+- **Lucide React** for iconography
+- **Geist Sans / Geist Mono**, self-hosted via the `geist` package (no build-time font fetch)
 
-        function submitForm() {
-            const email = document.getElementById('user-email').value;
-            if(email) {
-                alert("Welcome to LUX. \nWe will contact you as soon as a slot opens.");
-                // 나중에 여기서 이메일을 수집하는 코드를 연결할 겁니다.
-                console.log("New Lead: " + email);
-                location.reload();
-            } else {
-                alert("Please enter a valid email.");
-            }
-        }
-    </script>
-</body>
-</html>
+## Getting started
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
+
+Other scripts:
+
+```bash
+npm run build        # production build
+npm run start        # serve the production build
+npm run typecheck    # tsc --noEmit
+npm run lint         # next lint
+```
+
+## Structure
+
+```
+app/
+  layout.tsx     Fonts, metadata, viewport
+  page.tsx       Entire landing page (all sections as local components)
+  globals.css    Base layer + custom utilities (grid mask, grain, hairlines)
+tailwind.config.ts
+legacy/          Unrelated earlier HTML prototypes, kept for reference
+```
+
+`app/page.tsx` is intentionally a single file: every section (`GlobalNav`, `Hero`, `YieldTerminal`,
+`Mechanism`, `AssetTiers`, `Footer`) is a typed local component with inline mock data, so there are no
+cross-file imports to keep in sync.
+
+## Design system
+
+| Token | Value | Usage |
+| --- | --- | --- |
+| `obsidian` | `#050505` | Page background |
+| `obsidian-raised` | `#0A0A0B` | Metric tiles inside the terminal |
+| `yield` | `#00FF66` | **Only** revenue figures and live status dots |
+| Everything else | white at 2–18% opacity | Borders, glass fills, text hierarchy |
+
+Glass surfaces are `border-white/[0.07]` + `bg-white/[0.02]` + `backdrop-blur-xl`. Motion uses a single
+`cubic-bezier(0.16, 1, 0.3, 1)` curve throughout, and all of it is disabled under
+`prefers-reduced-motion`.
+
+## Copy and compliance notes
+
+The page sells *asset ownership and royalty distribution*, and the copy is deliberately written to
+avoid claims the site cannot substantiate:
+
+- The yield terminal is labelled **"Simulated preview · illustrative figures"** and feed lines are
+  prefixed `[demo]`, because the numbers are mock data. If you wire this to a real data source,
+  replace `TERMINAL_METRICS` / `FEED_RECORDS` and update that label.
+- The 80% figure is stated as a **contractual revenue-share term**, never as a guaranteed return.
+- The page does not assert compliance with any employer policy or jurisdiction. It tells visitors to
+  check their own agreement and advisors instead.
+
+Before launch, have a securities lawyer review this offering. Selling an asset for a fixed price with
+returns generated by someone else's efforts is likely a regulated investment offering in many
+jurisdictions, regardless of the vocabulary used to describe it.
