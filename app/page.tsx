@@ -245,20 +245,31 @@ function Eyebrow({ children }: { children: ReactNode }): JSX.Element {
   );
 }
 
+/**
+ * `title` and `titleTail` are rendered on separate lines so headings break at a
+ * sentence boundary instead of wherever the measured line happens to balance.
+ */
 function SectionHeading({
   eyebrow,
   title,
+  titleTail,
   lede,
 }: {
   eyebrow: string;
   title: string;
+  titleTail?: string;
   lede?: string;
 }): JSX.Element {
   return (
     <Reveal className="max-w-2xl">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-5 text-balance text-4xl font-medium tracking-tightest text-gradient-silver sm:text-5xl">
+      <h2 className="mt-5 text-4xl font-medium leading-[1.06] tracking-tightest text-gradient-silver sm:text-5xl">
         {title}
+        {titleTail ? (
+          <>
+            <br className="hidden sm:inline" /> {titleTail}
+          </>
+        ) : null}
       </h2>
       {lede ? <p className="mt-6 text-base leading-relaxed text-white/45">{lede}</p> : null}
     </Reveal>
@@ -360,7 +371,7 @@ function Hero(): JSX.Element {
           </StaggerItem>
 
           <StaggerItem>
-            <h1 className="mt-9 max-w-4xl text-balance text-[clamp(2.6rem,8.2vw,6.25rem)] font-medium leading-[0.94] tracking-tightest">
+            <h1 className="mt-9 text-[clamp(2.6rem,8.2vw,6.25rem)] font-medium leading-[0.94] tracking-tightest">
               <span className="text-gradient-silver">Own Autonomous AI Nodes.</span>
               <br />
               <span className="text-white/35">Earn B2B Royalties.</span>
@@ -399,7 +410,7 @@ function Hero(): JSX.Element {
           </StaggerItem>
 
           <StaggerItem>
-            <p className="mx-auto mt-8 max-w-xl text-[11px] leading-relaxed text-white/25">
+            <p className="mx-auto mt-8 max-w-xl text-[11px] leading-relaxed text-white/40">
               Royalty share is a contractual term, not a guaranteed return. Distributions vary with node
               performance. Review your own employment agreement and local regulations before acquiring an
               asset.
@@ -534,14 +545,14 @@ function StreamingFeed(): JSX.Element {
         </span>
       </div>
 
-      <div className="space-y-2.5" aria-live="off">
+      <div className="min-h-[7rem] space-y-2.5" aria-live="off">
         <AnimatePresence initial={false} mode="popLayout">
           {lines.map((line, index) => (
             <motion.p
               key={line.key}
               layout
               initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: index === 0 ? 1 : 0.42 - index * 0.09, y: 0 }}
+              animate={{ opacity: index === 0 ? 1 : 0.62 - (index - 1) * 0.14, y: 0 }}
               exit={{ opacity: 0, height: 0, marginBottom: 0 }}
               transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
               className="flex flex-wrap items-baseline gap-x-1.5 font-mono text-[11px] leading-relaxed text-white/70 sm:text-[12px]"
@@ -558,11 +569,6 @@ function StreamingFeed(): JSX.Element {
           ))}
         </AnimatePresence>
       </div>
-
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/70 to-transparent"
-        aria-hidden="true"
-      />
     </div>
   );
 }
@@ -578,7 +584,8 @@ function YieldTerminal(): JSX.Element {
       <div className="relative mx-auto max-w-shell">
         <SectionHeading
           eyebrow="Yield Terminal"
-          title="Fleet performance, rendered in real time."
+          title="Fleet performance,"
+          titleTail="rendered in real time."
           lede="Every contract your nodes close is settled, audited and distributed on-chain. The terminal below shows how fleet activity and royalty flow are reported to owners."
         />
 
@@ -677,7 +684,8 @@ function Mechanism(): JSX.Element {
       <div className="mx-auto max-w-shell">
         <SectionHeading
           eyebrow="The Mechanism"
-          title="You own the asset. The network does the work."
+          title="You own the asset."
+          titleTail="The network does the work."
           lede="SOVEREIGN-X separates ownership from operation. Owners hold node assets and receive royalties; the platform retains full operational responsibility for every contract executed."
         />
 
@@ -734,7 +742,8 @@ function TierCard({ tier }: { tier: AssetTier }): JSX.Element {
       <div className="relative flex items-start justify-between gap-4">
         <div>
           <h3 className="text-[15px] font-medium tracking-tight text-white">{tier.name}</h3>
-          <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/35">
+          {/* Fixed height keeps price + feature rows aligned across all three cards. */}
+          <p className="mt-1 font-mono text-[10px] uppercase leading-[1.5] tracking-[0.16em] text-white/35 lg:min-h-[2.25rem]">
             {tier.nodes}
           </p>
         </div>
@@ -751,11 +760,14 @@ function TierCard({ tier }: { tier: AssetTier }): JSX.Element {
         <span className="text-[11px] text-white/30">one-time acquisition</span>
       </div>
 
-      <p className="relative mt-5 text-[13px] leading-relaxed text-white/40">{tier.positioning}</p>
+      <p className="relative mt-5 text-[13px] leading-relaxed text-white/40 lg:min-h-[3.75rem]">
+        {tier.positioning}
+      </p>
 
       <div className="relative my-7 h-px w-full rule-x" aria-hidden="true" />
 
-      <ul className="relative space-y-3">
+      {/* flex-1 absorbs the slack from uneven feature counts so every CTA sits on the card floor. */}
+      <ul className="relative flex-1 space-y-3">
         {tier.features.map((feature) => (
           <li key={feature} className="flex items-start gap-2.5">
             <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/40" strokeWidth={2} aria-hidden="true" />
@@ -803,7 +815,7 @@ function AssetTiers(): JSX.Element {
         </Stagger>
 
         <Reveal delay={0.1}>
-          <p className="mt-8 text-center text-[11px] leading-relaxed text-white/25">
+          <p className="mt-8 text-center text-[11px] leading-relaxed text-white/40">
             Figures shown are illustrative and are not a forecast. Node performance varies by region,
             contract flow and market conditions; royalty distributions are not guaranteed.
           </p>
@@ -849,7 +861,7 @@ function Footer(): JSX.Element {
           </nav>
         </div>
 
-        <p className="mt-12 max-w-3xl text-[11px] leading-relaxed text-white/25">
+        <p className="mt-12 max-w-3xl text-[11px] leading-relaxed text-white/40">
           SOVEREIGN-X provides digital software assets and royalty distributions. We do not provide
           business registration services. Consult your tax advisor regarding asset yield. Royalty
           distributions depend on node performance and are not guaranteed; nothing on this page is
