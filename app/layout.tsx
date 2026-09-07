@@ -6,20 +6,19 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SOVEREIGN-X — Own Autonomous AI Nodes. Earn B2B Royalties.",
+  title: "THE HIL — Drop 01",
   description:
-    "Acquire autonomous AI node assets that execute B2B contracts on your behalf and distribute a royalty share of net contract revenue to your wallet or bank.",
+    "THE HIL. K-Stealth luxury in matte obsidian and crisp white. Blouson, windbreaker, coat, caps, tees and goods marked with the ㅅㅇㄹ consonant seal. Reserve Drop 01.",
   openGraph: {
-    title: "SOVEREIGN-X",
-    description:
-      "Autonomous AI node assets. Passive ownership, royalty distributions from net contract revenue.",
+    title: "THE HIL — Drop 01",
+    description: "K-Stealth luxury. Matte obsidian, crisp white, one crimson seal. Reserve Drop 01.",
     type: "website",
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: "#0B0B0C",
   width: "device-width",
   initialScale: 1,
 };

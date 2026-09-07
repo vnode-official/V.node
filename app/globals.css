@@ -19,65 +19,78 @@
   }
 
   ::selection {
-    background: rgba(0, 255, 102, 0.18);
+    background: rgba(128, 0, 22, 0.55);
     color: #ffffff;
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #050505;
+    background: #0b0b0c;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 9999px;
-    border: 3px solid #050505;
+    border: 2px solid #0b0b0c;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.2);
   }
 
   :focus-visible {
-    outline: 1px solid rgba(255, 255, 255, 0.6);
+    outline: 1px solid rgba(255, 255, 255, 0.7);
     outline-offset: 3px;
   }
 }
 
 @layer utilities {
-  /* Hairline dividers that read as etched glass rather than borders. */
+  /* Hairline dividers that fade at the ends, editorial rather than boxed. */
   .rule-x {
     background-image: linear-gradient(
       to right,
       transparent,
-      rgba(255, 255, 255, 0.12) 18%,
-      rgba(255, 255, 255, 0.12) 82%,
+      rgba(255, 255, 255, 0.14) 12%,
+      rgba(255, 255, 255, 0.14) 88%,
       transparent
     );
   }
 
-  .text-gradient-silver {
-    background-image: linear-gradient(180deg, #ffffff 8%, #ffffff 42%, rgba(255, 255, 255, 0.62) 100%);
+  .text-silver {
+    background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 46%, rgba(255, 255, 255, 0.58) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  .grid-mask {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size: 72px 72px;
-    mask-image: radial-gradient(ellipse 70% 55% at 50% 32%, #000 20%, transparent 78%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 32%, #000 20%, transparent 78%);
+  /* Brushed-metal edge used by the RESERVE button. Runs as a conic sweep on hover. */
+  .metal-border {
+    background: conic-gradient(
+      from var(--metal-angle, 200deg),
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.18) 22%,
+      rgba(255, 255, 255, 0.6) 48%,
+      rgba(255, 255, 255, 0.12) 72%,
+      rgba(255, 255, 255, 0.85)
+    );
   }
 
-  .grain {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  .scrollbar-none {
+    scrollbar-width: none;
   }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@property --metal-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 200deg;
 }
 
 @media (prefers-reduced-motion: reduce) {
