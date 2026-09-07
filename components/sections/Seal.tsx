@@ -133,8 +133,10 @@ export function Seal(): JSX.Element {
                         <div className="flex items-baseline justify-between gap-4">
                           <dt className="font-mono text-[9px] uppercase tracking-editorial text-white/40">Placement</dt>
                           <dd className="text-right text-xs text-white/80">
-                            {treatment.placement}
-                            <span className="ml-2 font-mono text-[9px] text-crimson-soft">{treatment.note}</span>
+                            <span className="block">{treatment.placement}</span>
+                            <span className="block whitespace-nowrap font-mono text-[9px] text-crimson-soft">
+                              {treatment.note}
+                            </span>
                           </dd>
                         </div>
                         <div className="flex items-baseline justify-between gap-4">

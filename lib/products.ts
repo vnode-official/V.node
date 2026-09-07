@@ -203,7 +203,7 @@ export const PRODUCTS: readonly Product[] = [
         detail:
           "18 mm ㅅㅇㄹ. Black: Deep Crimson fill stitch. Deep Navy: Midnight Blue outline stitch, tone on tone.",
         x: 50,
-        y: 41,
+        y: 44.4,
       },
     ],
     shots: ["Front panel", "Crown seam", "Brass slider", "Sweatband"],

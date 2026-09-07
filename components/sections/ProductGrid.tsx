@@ -113,24 +113,24 @@ function ProductCard({ product, onOpen }: ProductCardProps): JSX.Element {
         </div>
 
         <div className="flex items-end justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             {product.colorways.map((colorway) => (
               <span
                 key={colorway.id}
                 title={colorway.label}
-                className={`h-3 w-3 rounded-full border transition-colors duration-300 ${
+                className={`h-3 w-3 shrink-0 rounded-full border transition-colors duration-300 ${
                   colorway.id === shown.id ? "border-white" : "border-white/25"
                 }`}
                 style={{ backgroundColor: colorway.hex }}
               />
             ))}
             {placement ? (
-              <span className="ml-2 hidden font-mono text-[9px] uppercase tracking-editorial text-crimson-soft sm:inline">
+              <span className="ml-2 hidden min-w-0 truncate font-mono text-[9px] uppercase tracking-editorial text-crimson-soft sm:inline">
                 ㅅㅇㄹ · {placement.title}
               </span>
             ) : null}
           </div>
-          <p className="font-mono text-xs text-white/70">{product.price}</p>
+          <p className="shrink-0 whitespace-nowrap font-mono text-xs text-white/70">{product.price}</p>
         </div>
       </div>
     </button>

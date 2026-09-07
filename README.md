@@ -1,13 +1,14 @@
-# SOVEREIGN-X
+# THE HIL — Drop 01
 
-Premium landing page for SOVEREIGN-X — autonomous AI node assets with royalty distribution.
+K-Stealth luxury e-commerce landing page. Matte obsidian, crisp white, and one Deep Crimson
+ㅅㅇㄹ seal per piece.
 
 ## Stack
 
 - **Next.js 14** (App Router) + **TypeScript** (strict)
 - **Tailwind CSS** 3.4
-- **Framer Motion** 11 for scroll reveals and staggered entrances
-- **Lucide React** for iconography
+- **Framer Motion** 11 for entrances, scroll reveals, drawer / modal transitions
+- **Lucide React** for the few icons used
 - **Geist Sans / Geist Mono**, self-hosted via the `geist` package (no build-time font fetch)
 
 ## Getting started
@@ -20,7 +21,7 @@ npm run dev          # http://localhost:3000
 Other scripts:
 
 ```bash
-npm run build        # production build
+npm run build        # production build (fully static)
 npm run start        # serve the production build
 npm run typecheck    # tsc --noEmit
 npm run lint         # next lint
@@ -30,42 +31,55 @@ npm run lint         # next lint
 
 ```
 app/
-  layout.tsx     Fonts, metadata, viewport
-  page.tsx       Entire landing page (all sections as local components)
-  globals.css    Base layer + custom utilities (grid mask, grain, hairlines)
-tailwind.config.ts
-legacy/          Unrelated earlier HTML prototypes, kept for reference
+  layout.tsx                 Fonts, metadata, viewport
+  page.tsx                   Composes the sections inside <StoreProvider>
+  globals.css                Base layer, hairline / metallic utilities, reduced-motion guard
+  icon.svg                   Favicon (ㅅㅇㄹ on obsidian)
+components/
+  brand/HangulMark.tsx       Geometric SVG of the ㅅㅇㄹ seal (solid + outline variants)
+  product/ProductVisual.tsx  Vector product silhouettes with the seal placed per colourway
+  sections/                  Nav, Hero, Manifesto, ProductGrid, Seal, Drop, Footer
+  store/StoreProvider.tsx    Drawer / pre-order state; mounts both overlays once
+  store/ProductDrawer.tsx    Side drawer: Look / Seal / Material views, colour + size, callouts
+  store/PreOrderModal.tsx    Pre-order form with validation and a held-reservation state
+  ui/Reveal.tsx              opacity 0 / y 30 -> opacity 1 / y 0 on enter, once
+  ui/MetallicButton.tsx      RESERVE DROP 01: brushed-metal border, rising fill, glow
+  ui/Overlay.tsx             Shared dialog shell: Escape, backdrop, scroll lock, focus
+lib/
+  products.ts                Catalogue, colourways, seal treatment and placement data
+legacy/                      Unrelated earlier HTML prototypes, kept for reference
 ```
-
-`app/page.tsx` is intentionally a single file: every section (`GlobalNav`, `Hero`, `YieldTerminal`,
-`Mechanism`, `AssetTiers`, `Footer`) is a typed local component with inline mock data, so there are no
-cross-file imports to keep in sync.
 
 ## Design system
 
 | Token | Value | Usage |
 | --- | --- | --- |
-| `obsidian` | `#050505` | Page background |
-| `obsidian-raised` | `#0A0A0B` | Metric tiles inside the terminal |
-| `yield` | `#00FF66` | **Only** revenue figures and live status dots |
-| Everything else | white at 2–18% opacity | Borders, glass fills, text hierarchy |
+| `obsidian` | `#0B0B0C` | Page background, black garments |
+| `obsidian-raised` | `#111113` | Product visual backplates |
+| white | `#FFFFFF` | Type, white tee, tea box |
+| `crimson` | `#800016` | **Only** the seal, index numerals and tiny brand tags |
+| `navy` | `#0B132B` | **Only** the Navy blouson / windbreaker and the Deep Navy cap |
+| `border-neutral-800` | | Every hairline |
 
-Glass surfaces are `border-white/[0.07]` + `bg-white/[0.02]` + `backdrop-blur-xl`. Motion uses a single
-`cubic-bezier(0.16, 1, 0.3, 1)` curve throughout, and all of it is disabled under
-`prefers-reduced-motion`.
+### Seal treatments
 
-## Copy and compliance notes
+All of these live in `lib/products.ts` and drive `ProductVisual`, the drawer callouts and the
+pre-order thumbnail:
 
-The page sells *asset ownership and royalty distribution*, and the copy is deliberately written to
-avoid claims the site cannot substantiate:
+| Piece | Placement | Black | Navy / White |
+| --- | --- | --- | --- |
+| Blouson · Windbreaker · Coat | Outer back neck (목 뒤쪽 바깥쪽) | Deep Crimson embroidery | Deep Crimson embroidery |
+| Consonant Cap | Front centre panel | Deep Crimson fill stitch | Midnight Blue outline (Deep Navy) |
+| Seal Tee · Short / Long | Sleeve hem / cuff | White micro print | Deep Crimson micro print (White) |
+| Monami 6-Pack · Black Steel | Barrel, below the clip | Deep Crimson laser etch | — |
+| Premium Tea Bag Set | Lid, centre | Blind emboss + crimson tag | Blind emboss + crimson tag |
 
-- The yield terminal is labelled **"Simulated preview · illustrative figures"** and feed lines are
-  prefixed `[demo]`, because the numbers are mock data. If you wire this to a real data source,
-  replace `TERMINAL_METRICS` / `FEED_RECORDS` and update that label.
-- The 80% figure is stated as a **contractual revenue-share term**, never as a guaranteed return.
-- The page does not assert compliance with any employer policy or jurisdiction. It tells visitors to
-  check their own agreement and advisors instead.
+Motion uses a single `cubic-bezier(0.16, 1, 0.3, 1)` curve throughout and is reduced to fades
+under `prefers-reduced-motion`.
 
-Before launch, have a securities lawyer review this offering. Selling an asset for a fixed price with
-returns generated by someone else's efforts is likely a regulated investment offering in many
-jurisdictions, regardless of the vocabulary used to describe it.
+## Notes
+
+- The pre-order form has no backend yet: submission is simulated client-side and produces a
+  reference of the form `HIL-01-XXXX`. Wire `PreOrderModal.onSubmit` to a real endpoint before
+  launch.
+- Prices and the drop window are placeholder copy in `lib/products.ts`.

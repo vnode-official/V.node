@@ -121,31 +121,39 @@ function DrawerContent({ product, onClose }: DrawerContentProps): JSX.Element {
                 </motion.div>
 
                 {view === "look" && placement ? (
-                  /* Plain wrapper owns the centring transform; motion owns scale. */
-                  <div
-                    className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2"
+                  /*
+                   * Anchor sits exactly on the seal; the pin is lifted off it on a
+                   * leader line so the mark itself stays visible. Plain wrapper owns
+                   * the centring transform, motion owns the entrance.
+                   */
+                  <motion.div
+                    className="absolute h-0 w-0"
                     style={{ left: `${placement.x}%`, top: `${placement.y}%` }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.45, duration: 0.6, ease: EASE }}
                   >
-                    <motion.button
+                    <button
                       type="button"
                       onClick={() => setView("seal")}
-                      initial={{ opacity: 0, scale: 0.6 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.45, duration: 0.5, ease: EASE }}
-                      className={`group absolute top-0 flex items-center gap-3 ${
-                        placement.x > 60 ? "right-0 flex-row-reverse" : "left-0"
-                      }`}
+                      className="group absolute bottom-0 left-0 flex w-6 -translate-x-1/2 flex-col items-center"
                       aria-label={`Zoom into ${placement.title}`}
                     >
-                      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/70 bg-obsidian/80 font-mono text-[9px] text-white backdrop-blur">
+                      <span className="relative flex h-6 w-6 items-center justify-center rounded-full border border-white/70 bg-obsidian/80 font-mono text-[9px] text-white backdrop-blur">
                         {placement.index}
                         <span className="absolute inset-0 -z-10 animate-ping rounded-full border border-white/40 [animation-duration:2.4s]" />
+                        <span
+                          className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[9px] uppercase tracking-editorial text-white/70 transition-colors duration-300 group-hover:text-white ${
+                            placement.x > 60 ? "right-full mr-3" : "left-full ml-3"
+                          }`}
+                        >
+                          {placement.title}
+                        </span>
                       </span>
-                      <span className="whitespace-nowrap font-mono text-[9px] uppercase tracking-editorial text-white/70 transition-colors duration-300 group-hover:text-white">
-                        {placement.title}
-                      </span>
-                    </motion.button>
-                  </div>
+                      <span aria-hidden className="h-8 w-px bg-white/40" />
+                      <span aria-hidden className="h-[7px] w-[7px] -translate-y-[3.5px] rounded-full border border-white/80" />
+                    </button>
+                  </motion.div>
                 ) : null}
               </motion.div>
             )}
