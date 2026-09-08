@@ -6,11 +6,11 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SOVEREIGN-X — Own Autonomous AI Nodes. Earn B2B Royalties.",
+  title: "THE HIL — Yeouido Seoul",
   description:
     "Acquire autonomous AI node assets that execute B2B contracts on your behalf and distribute a royalty share of net contract revenue to your wallet or bank.",
   openGraph: {
-    title: "SOVEREIGN-X",
+    title: "THE HIL — Yeouido Seoul",
     description:
       "Autonomous AI node assets. Passive ownership, royalty distributions from net contract revenue.",
     type: "website",
