@@ -6,13 +6,13 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SOVEREIGN-X — Own Autonomous AI Nodes. Earn B2B Royalties.",
+  title: "THE HIL : SEOUL PASS — Seoul stories for ARMY",
   description:
-    "Acquire autonomous AI node assets that execute B2B contracts on your behalf and distribute a royalty share of net contract revenue to your wallet or bank.",
+    "A curated Seoul field guide with BTS history, K-culture stops, Naver Map links, and collectible digital K-SEAL badges.",
   openGraph: {
-    title: "SOVEREIGN-X",
+    title: "THE HIL : SEOUL PASS",
     description:
-      "Autonomous AI node assets. Passive ownership, royalty distributions from net contract revenue.",
+      "Explore BTS history and Seoul culture with local Naver Map links.",
     type: "website",
   },
   robots: { index: true, follow: true },
